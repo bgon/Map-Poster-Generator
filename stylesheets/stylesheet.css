@@ -28,6 +28,7 @@ body {
     color: #c4c5c3;
     overflow: hidden;
     background-color: #272822;
+    background-image:url(../images/imagedoc-darknoise.png);
 }
 
 .icon {
