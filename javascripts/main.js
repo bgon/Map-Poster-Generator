@@ -130,14 +130,14 @@ function generatePicture() {
     //Google requires clear, visible attribution to both Google and their data providers when the Content is shown
     //https://www.google.com/permissions/geoguidelines.html
     //this info will be too small when generated...
+    //Thus we will insert the gmno_print string as text in the poster
     document.getElementById("pac-input").style.display = 'none';
     document.getElementsByClassName("gmnoprint")[0].style.display = 'none';
     document.getElementsByClassName("gmnoprint gm-style-cc")[0].style.display = 'none';
     document.getElementsByClassName("gmnoprint gm-bundled-control gm-bundled-control-on-bottom")[0].style.display = 'none';
     document.querySelector('[src^="http://maps.gstatic.com/mapfiles/api-3/images/google"]').style.display = 'none';
-    //Thus we will insert it as text in the poster
-    gmno_print = document.getElementsByClassName("gmnoprint")[0].nextElementSibling.innerText;
-
+    
+    gmno_print = document.getElementsByClassName("gmnoscreen")[0].firstChild.firstChild.textContent;
 
     html2canvas(map_canvas, {
         useCORS: true
@@ -237,7 +237,91 @@ function initScript() {
  * Create the map
  */
 function initMap() {
-    var styles = [{"featureType": "all", "elementType": "geometry", "stylers": [{"visibility": "off"}] }, {"featureType": "all", "elementType": "labels", "stylers": [{"visibility": "off"}] }, {"featureType": "landscape", "elementType": "all", "stylers": [{"color": "#FFFFFF"}, {"visibility": "on"}] }, {"featureType": "landscape", "elementType": "labels.text", "stylers": [{"visibility": "off"}] }, {"featureType": "road", "elementType": "all", "stylers": [{"weight": "1.0"}] }, {"featureType": "road", "elementType": "geometry", "stylers": [{"visibility": "on"}, {"color": "#000000"}, {"weight": "1.0"}] }, {"featureType": "road", "elementType": "geometry.fill", "stylers": [{"visibility": "off"}] }, {"featureType": "road", "elementType": "geometry.stroke", "stylers": [{"weight": stroke_weight }] }, {"featureType": "road.highway", "elementType": "all", "stylers": [{"visibility": "off"}] }, {"featureType": "road.arterial", "elementType": "all", "stylers": [{"visibility": "on"}] }, {"featureType": "road.arterial", "elementType": "labels", "stylers": [{"visibility": "off"}] }, {"featureType": "road.local", "elementType": "all", "stylers": [{"visibility": "on"}] }, {"featureType": "road.local", "elementType": "labels", "stylers": [{"visibility": "off"}] }];
+    var styles = [{
+        "featureType": "all",
+        "elementType": "geometry",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "all",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [{
+            "color": "#FFFFFF"
+        }, {
+            "visibility": "on"
+        }]
+    }, {
+        "featureType": "landscape",
+        "elementType": "labels.text",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [{
+            "weight": "1.0"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{
+            "visibility": "on"
+        }, {
+            "color": "#000000"
+        }, {
+            "weight": "1.0"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [{
+            "weight": stroke_weight
+        }]
+    }, {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "road.arterial",
+        "elementType": "all",
+        "stylers": [{
+            "visibility": "on"
+        }]
+    }, {
+        "featureType": "road.arterial",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "road.local",
+        "elementType": "all",
+        "stylers": [{
+            "visibility": "on"
+        }]
+    }, {
+        "featureType": "road.local",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }];
     var styledMap = new google.maps.StyledMapType(styles, {
         name: "Poster"
     });
