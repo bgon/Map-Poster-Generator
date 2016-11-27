@@ -35,10 +35,10 @@ function share() {
 
     //load thejsonp
     var s = document.createElement('script');
-    var url = window.location.href;
-    var short_url = resolved_location_name.substring(0, 10) + init_lat.toFixed(2) + '_' + init_lng.toFixed(2);
+    var url = encodeURIComponent(window.location.href);
     s.type = 'text/javascript';
     s.src = 'https://is.gd/create.php?format=json&callback=short_url&url=' + url + '&logstats=0';
+        console.log(s.src);
     var h = document.getElementsByTagName('script')[0];
     h.parentNode.insertBefore(s, h);
 }
