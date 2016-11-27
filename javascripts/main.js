@@ -1,5 +1,5 @@
 //Canvas & Map variables
-var map;
+var map = {};
 var gmno_print;
 var canvas_bounds = {};
 var map_canvas = document.getElementById("map");
@@ -30,7 +30,6 @@ if (Object.keys(urlSettings).length === 5) {
     document.title = 'Poster Map Generator: ' + resolved_location_name;
     var bold = parseInt(urlSettings.bold);
 }
-setStrokeWeight(generated_size);
 
 /**
  * Set the  weight of the road stroke
@@ -40,16 +39,16 @@ function setStrokeWeight(width) {
 
     if (width == 384) {
         if (bold === 0) {
-            stroke_weight = 0.05;
+            stroke_weight = 0.3;
         } else {
-            stroke_weight = 0.25;
+            stroke_weight = 2.25;
         }
     }
     if (width == 768) {
         if (bold === 0) {
-            stroke_weight = 0.2;
+            stroke_weight = 0.5;
         } else {
-            stroke_weight = 1;
+            stroke_weight = 3.25;
         }
     }
 
@@ -67,6 +66,7 @@ function setStrokeWeight(width) {
             stroke_weight = 10;
         }
     }
+
 }
 
 /**
@@ -74,6 +74,7 @@ function setStrokeWeight(width) {
  * @param {int} width width of the map
  */
 function changeCanvasSize(width) {
+    map = {};
     setStrokeWeight(width);
 
     if (width == 3072) {
@@ -83,7 +84,7 @@ function changeCanvasSize(width) {
     if (width == 6144) {
         document.getElementById("mapContainer").style.opacity = 0;
         displayStatus("Loading the map, we abort after 45 seconds");
-        setTimeout(function() {
+        setTimeout(function () {
             document.getElementById("mapContainer").style.opacity = 1;
             is_edit = true;
             changeCanvasSize(384);
@@ -136,12 +137,12 @@ function generatePicture() {
     document.getElementsByClassName("gmnoprint gm-style-cc")[0].style.display = 'none';
     document.getElementsByClassName("gmnoprint gm-bundled-control gm-bundled-control-on-bottom")[0].style.display = 'none';
     document.querySelector('[src^="http://maps.gstatic.com/mapfiles/api-3/images/google"]').style.display = 'none';
-    
+
     gmno_print = document.getElementsByClassName("gmnoscreen")[0].firstChild.firstChild.textContent;
 
     html2canvas(map_canvas, {
         useCORS: true
-    }).then(function(canvas) {
+    }).then(function (canvas) {
         document.getElementsByClassName("gmnoprint")[0].style.display = 'initial';
         document.getElementsByClassName("gmnoprint gm-style-cc")[0].style.display = 'initial';
 
@@ -178,7 +179,7 @@ function generatePicture() {
 
         //copy the map
         //... too much artefacts with putImageData, use drawImage instead
-        //dest_ctx.putImageData(imageData, Pm, Pm, 0, 0, generated_size, generated_size);
+        //poster_canvas_ctx.putImageData(imageData, Pm, Pm, 0, 0, generated_size, generated_size);
         poster_canvas_ctx.drawImage(canvas, Pm, Pm);
 
         //insert the texts
@@ -204,7 +205,7 @@ function generatePicture() {
 function savePicture() {
     is_edit = true;
     var image_name = resolved_location_name + '_' + generated_size + '_' + init_lat + '_' + init_lng + '_' + init_zoom;
-    poster_canvas.toBlob(function(blob) {
+    poster_canvas.toBlob(function (blob) {
         saveAs(blob, image_name + '.jpg');
     }, "image/jpeg", 1.0);
 
@@ -277,19 +278,13 @@ function initMap() {
         }, {
             "color": "#000000"
         }, {
-            "weight": "1.0"
+            "weight": stroke_weight
         }]
     }, {
         "featureType": "road",
         "elementType": "geometry.fill",
         "stylers": [{
             "visibility": "off"
-        }]
-    }, {
-        "featureType": "road",
-        "elementType": "geometry.stroke",
-        "stylers": [{
-            "weight": stroke_weight
         }]
     }, {
         "featureType": "road.highway",
@@ -339,6 +334,7 @@ function initMap() {
         }
     };
 
+
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     map.mapTypes.set('weight_style', styledMap);
     map.setMapTypeId('weight_style');
@@ -353,48 +349,48 @@ function initMap() {
     var searchBox = new google.maps.places.SearchBox(input);
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
-    map.addListener('tilesloaded', function() {
+    map.addListener('tilesloaded', function () {
         displayStatus("Map generated");
 
         if (canvas_bounds != map.getBounds()) {
             canvas_bounds = map.getBounds();
-
-            // update the url for the sharing option
-            var url = '?bold=' + bold + '&zoom=' + map.zoom + '&lat=' + map.center.lat() + '&lng=' + map.center.lng() + '&name=' + resolved_location_name;
-            window.history.replaceState("", "", url);
-            // update the Title
-            document.title = "Map Poster Generator: " + resolved_location_name;
             if (is_edit === false) {
                 generatePicture();
             }
         }
     });
 
-    map.addListener('bounds_changed', function() {
+    map.addListener('bounds_changed', function () {
         searchBox.setBounds(map.getBounds());
         init_zoom = map.zoom;
         init_lat = map.center.lat();
         init_lng = map.center.lng();
+
+        // update the url for the sharing option
+        var url = '?bold=' + bold + '&zoom=' + map.zoom + '&lat=' + map.center.lat() + '&lng=' + map.center.lng() + '&name=' + resolved_location_name;
+        window.history.replaceState("", "", url);
+        // update the Title
+        document.title = "Map Poster Generator: " + resolved_location_name;
     });
 
     var markers = [];
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
-    searchBox.addListener('places_changed', function() {
+    searchBox.addListener('places_changed', function () {
         var places = searchBox.getPlaces();
         if (places.length === 0) {
             return;
         }
         resolved_location_name = places[0].name;
         // Clear out the old markers.
-        markers.forEach(function(marker) {
+        markers.forEach(function (marker) {
             marker.setMap(null);
         });
         markers = [];
 
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
+        places.forEach(function (place) {
             if (place.geometry.viewport) {
                 // Only geocodes have viewport.
                 bounds.union(place.geometry.viewport);
