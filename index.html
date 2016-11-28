@@ -2,60 +2,55 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Map Poster Generator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="images/icon.png">
-    <link rel="icon" type="image/png" href="images/icon.png" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/ionicons.min.css" media="screen">
-    <script src="javascripts/ui_utils.js"></script>
-    <script src="javascripts/html2canvas.js"></script>
-    <script src="javascripts/FileSaver.min.js"></script>
-    <script src="javascripts/canvas-toBlob.js"></script>
-    <script src="javascripts/jspdf.min.js"></script>
-    <script src="javascripts/addimage.js"></script>
+	<meta charset="UTF-8">
+	<title>Map Poster Generator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" href="images/icon.png">
+	<link rel="icon" type="image/png" href="images/icon.png" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="stylesheets/ionicons.min.css" media="screen">
+	<script src="javascripts/ui_utils.js"></script>
+	<script src="javascripts/html2canvas.js"></script>
+	<script src="javascripts/FileSaver.min.js"></script>
+	<script src="javascripts/canvas-toBlob.js"></script>
+	<script src="javascripts/jspdf.min.js"></script>
+	<script src="javascripts/addimage.js"></script>
 </head>
 
 <body>
-    <main id="container" class="MainContainer">
-        <section class="page-header">
-            <h3>Map Poster Generator</h3>
-            <a href="#" onClick="posterPreview(768)" title="Preview your poster"><i class="icon ion-images"></i></a>
-            <a href="#" onClick="posterDownload(3072)" title="Download"> <i class="icon ion-android-download"></i></a>
-            <a href="#" onClick="share()" title="Share"><i class="icon ion-android-share-alt"></i></a>
-        </section>
-        <section class="main-content">
-            <p id="messages"></p>
-            <div id="mapContainer">
-                <div id="map" style="height: 384px;width: 384px;"></div>
-                <a href="#" onClick="posterDownload(6144)" title="Download in HQ"> <i class="icon ion-android-download"></i></a>
-                <br>(Hi-Res, beta)
-            </div>
-            <footer class="site-footer">
-                <span class="site-footer-credits"><a href="https://github.com/bgon/Poster-Map-Generator" title="Fork me on GitHub"><img src="images/GitHub-Mark-32px.png" ></a></span>
-            </footer>
-        </section>
-    </main>
-    <!-- Modals -->
-    <div id="previewModal" class="Modal is-hidden is-visuallyHidden">
-        <div class="Modal-content">
-            <span id="closeModal" class="Close" onClick="closePreview()"><i class="icon ion-close-circled"></i></span>
-            <canvas id="posterPreviewCanvas" width="480" height="678"></canvas>
-        </div>
-    </div>
-    <div id="shareModal" class="Modal is-hidden is-visuallyHidden">
-        <div class="Modal-content">
-            <span id="closeModal" class="Close" onClick="closeShare()"><i class="icon ion-close-circled"></i></span>
-            <p id="shortUrl"></p>
-        </div>
-    </div>
-    <div id="preloadfont">.</div>
-    <div id="preloadfontR">.</div>
-    <script src="javascripts/main.js"></script>
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDBkw5voxhxMv9WcD0T9OMi70GjP28QToU&libraries=places&callback=initScript" async defer></script>
+	<main id="container" class="MainContainer">
+		<section class="main-content">
+			<h1>Map Poster Generator</h1>
+			<p>Create a map poster (3840x5430 JPEG file) you can print on your favorite paper!</p>
+			<div id="tools">
+				<input autocomplete="off" placeholder="Search for city or country" class="controls" id="pac-input" type="text">
+				<button class="saveButton icon ion-ios-download-outline" onClick="save(3072)" title="Save poster as a 20 megapixels .jpg file"> Save Poster!</button>
+				<button class="shareButton icon ion-android-share-alt" onClick="share()" title="Share this map"></button>
+			</div>
+			<div id="posterContainer">
+				<div id="mapContainer">
+					<div id="road_map"></div>
+				</div>
+				<canvas id="poster_preview_canvas" width="480" height="199"></canvas>
+			</div>
+			<footer class="site-footer">
+				<span class="site-footer-credits"><a href="https://github.com/bgon/Map-Poster-Generator" title="Fork me on GitHub"><img src="images/GitHub-Mark-32px.png" ></a></span>
+			</footer>
+		</section>
+	</main>
+	<!-- Modal -->
+	<div id="infoModal" class="Modal is-hidden is-visuallyHidden">
+		<div class="Modal-content">
+			<p id="messages"></p>
+		</div>
+	</div>
+	<div id="preloadfont">.</div>
+	<div id="preloadfontR">.</div>
+	<script src="javascripts/main.js"></script>
+	<script src="http://maps.google.com/maps/api/js?key=<APIKEY>&libraries=places&callback=initScript"
+					async defer></script>
 </body>
 
 </html>

@@ -2,13 +2,6 @@
     box-sizing: border-box;
 }
 
-html {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
 @font-face {
     font-family: 'Asimov';
     src: url('../fonts/Asimov.otf');
@@ -22,48 +15,29 @@ html {
 body {
     padding: 0;
     margin: 0;
-    font-family: "Asimov", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #c4c5c3;
-    overflow: hidden;
-    background-color: #272822;
+    font-family: Roboto;
+    font-size: 18px;
+    color: #333333;
+    background-color: #FDFCFD;
 }
 
-.icon {
-    color: #c4c5c3;
-    font-size: 28px;
-    margin: 0px 15px 0px 15px;
-}
-
-.icon:hover {
-    color: #fff;
-}
-
-#messages {
-    font-family: Monospace;
-    padding: 0px;
+#container {
+    width: 480px;
     margin: auto;
-    width: 384px;
-    font-size: 12px;
 }
 
-#shortUrl {
-    font-family: Asimov;
-    color: #fff;
-    font-size: 32px;
-    padding: 0px;
+#posterContainer {
+    width: 480px;
     margin: auto;
-    margin-top: 300px;
-    text-align: center;
+    margin-top: 8px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 #mapContainer {
-    margin: auto;
-}
-
-#map {
-    height: 100%;
+    width: 384px;
+    padding-top: 48px;
+    padding-bottom: 48px;
     margin: auto;
 }
 
@@ -75,6 +49,61 @@ body {
     display: inline-block;
 }
 
+.saveButton {
+    border: 1px solid rgba(111, 124, 130, .5);
+    font-size: 1.0rem;
+    color: #6F7C82;
+    padding: 0 1.2em;
+    line-height: 1.8rem;
+    border-radius: 8px;
+    vertical-align: middle;
+    background-color: transparent;
+    margin: 0px;
+}
+
+.shareButton {
+    border: 0px;
+    font-size: 1.0rem;
+    color: #6F7C82;
+    padding: 0 1.2em;
+    line-height: 1.8rem;
+    border-radius: 8px;
+    vertical-align: middle;
+    background-color: transparent;
+    margin: 0px;
+}
+
+.saveButton:hover,
+.shareButton:hover {
+    color: #4078C0;
+    text-decoration: none;
+}
+
+.saveButton:active {
+    position: relative;
+    top: 1px;
+}
+
+.share {
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    width: 280px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    background-image: none;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    color: #444444;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.33;
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
 .controls {
     border: 1px solid transparent;
     border-radius: 2px 0 0 2px;
@@ -82,23 +111,18 @@ body {
     -moz-box-sizing: border-box;
     height: 32px;
     outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-h3 {
-    margin: 0px;
-    padding: 5px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 #pac-input {
-    background-color: rgba(255, 255, 255, 0.9);
     font-family: Roboto;
+    background-color: rgba(255, 255, 255, 0.9);
     font-size: 15px;
     font-weight: 300;
     padding: 0 13px 0 13px;
     text-overflow: ellipsis;
-    width: 300px;
-    margin: 3px;
+    width: 240px;
+    margin-right: 30px;
     color: black;
 }
 
@@ -128,17 +152,12 @@ h3 {
 }
 
 a {
-    font-family: Asimov;
     color: #fefefe;
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
-}
-
-.MainContainer {
-    text-align: center;
 }
 
 .is-blurred {
@@ -165,17 +184,23 @@ a:hover {
 }
 
 .Modal-content {
-    background-color: transparent;
-    padding: 10px;
-    width: 100%;
-    max-width: 480px;
-    min-height: 640px;
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 512px;
+    height: 256px;
     margin: auto;
+    margin-top: 100px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-.Modal-content canvas {
-    width: 100%;
-    max-width: 480px;
+#messages {
+    margin-top: 100px;
+    font-size: 18px;
+    text-align: center;
 }
 
 .ModalOpen {
@@ -188,22 +213,6 @@ a:hover {
 
 .is-visuallyHidden {
     opacity: 0;
-}
-
-
-/* The Close Button */
-
-.Close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 16px;
-}
-
-.Close:hover,
-.Close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 .page-header {
@@ -290,19 +299,23 @@ a:hover {
 .main-content h4,
 .main-content h5,
 .main-content h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
     font-weight: normal;
-    color: #159957;
+    color: #444444;
+    text-align: center;
 }
 
 .main-content p {
-    margin-bottom: 1em;
+    margin-bottom: 1.2em;
+    font-size: 0.8rem;
+    color: #AAAAAA;
+    text-align: center;
 }
 
 .main-content code {
     padding: 2px 4px;
-    font-family: Asimov, "Liberation Mono", Menlo, Courier, monospace;
+    font-family: "Liberation Mono", Menlo, Courier, monospace;
     font-size: 0.9rem;
     color: #383e41;
     background-color: #f3f6fa;
@@ -313,7 +326,7 @@ a:hover {
     padding: 0.8rem;
     margin-top: 0;
     margin-bottom: 1rem;
-    font: 1rem Asimov, "Liberation Mono", Menlo, Courier, monospace;
+    font: 1rem "Liberation Mono", Menlo, Courier, monospace;
     color: #567482;
     word-wrap: normal;
     background-color: #f3f6fa;
@@ -321,7 +334,7 @@ a:hover {
     border-radius: 0.3rem;
 }
 
-.main-content pre > code {
+.main-content pre>code {
     padding: 0;
     margin: 0;
     font-size: 0.9rem;
@@ -382,11 +395,11 @@ a:hover {
     border-left: 0.3rem solid #dce6f0;
 }
 
-.main-content blockquote >:first-child {
+.main-content blockquote>:first-child {
     margin-top: 0;
 }
 
-.main-content blockquote >:last-child {
+.main-content blockquote>:last-child {
     margin-bottom: 0;
 }
 
@@ -435,22 +448,21 @@ a:hover {
 @media screen and (min-width: 64em) {
     .main-content {
         max-width: 64rem;
-        padding: 0rem 6rem;
-        margin: 0 auto;
+        margin: auto;
         font-size: 1.1rem;
     }
 }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
     .main-content {
-        padding: 0rem 4rem;
+        margin: auto;
         font-size: 1.1rem;
     }
 }
 
 @media screen and (max-width: 42em) {
     .main-content {
-        padding: 0rem 0rem;
+        margin: auto;
         font-size: 1rem;
     }
 }
@@ -458,6 +470,7 @@ a:hover {
 .site-footer {
     padding-top: 1rem;
     margin-top: 0rem;
+    text-align: center;
 }
 
 .site-footer-owner {
